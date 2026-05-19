@@ -1,5 +1,4 @@
 import os
-import re
 from pathlib import Path
 
 TOTAL_PROBLEMS = 150
@@ -17,35 +16,39 @@ def count_solutions(directory):
     return len(solutions)
 
 
-def generate_progress_bar(completed, total, bar_length=20):
-    """Generates a markdown progress bar."""
+def generate_progress_bar(completed, total, bar_length=50):
+    """Generates a markdown progress bar using colored emojis."""
     percentage = (completed / total) * 100
     filled_length = int(bar_length * completed // total)
 
-    # █ for completed, ░ for remaining
-    bar = "█" * filled_length + "░" * (bar_length - filled_length)
+    # 🟩 for completed, ⬜ for remaining
+    bar = "🟩" * filled_length + "⬜" * (bar_length - filled_length)
 
-    return f"**{completed}/{total}** completed ({percentage:.2f}%)\n\n`[{bar}]`"
+    # Removed the backticks `[ ]` because emojis look better without them
+    return f"**{completed}/{total}** completed ({percentage:.2f}%)\n\n{bar}"
 
 
-def update_readme(progress_text):
-    """Injects the progress text between the HTML markers in the README."""
-    with open(README_PATH, "r") as file:
-        readme_content = file.read()
+def rewrite_readme(progress_text):
+    """Rewrites the entire README from scratch using a template."""
 
-    # Regex to find the tags and replace everything in between them
-    pattern = r"(\n).*?(\n)"
-    replacement = rf"\g<1>{progress_text}\g<2>"
+    # This is the exact text that will become your README
+    # We inject the progress_text directly into it using the f-string
+    readme_content = f"""# My NeetCode 150 Journey
+Having a bit of fun and testing my basics.
+This repository contains my solutions to the NeetCode 150.
 
-    updated_content = re.sub(pattern, replacement, readme_content, flags=re.DOTALL)
+### Current Progress
+{progress_text}
+"""
 
-    with open(README_PATH, "w") as file:
-        file.write(updated_content)
+    # Opening in "w" mode completely overwrites the file
+    with open(README_PATH, "w", encoding="utf-8") as file:
+        file.write(readme_content)
 
 
 if __name__ == "__main__":
     completed_count = count_solutions(SOLUTIONS_DIR)
     progress_bar = generate_progress_bar(completed_count, TOTAL_PROBLEMS)
 
-    update_readme(progress_bar)
-    print(f"Success! Updated README to {completed_count}/{TOTAL_PROBLEMS}.")
+    rewrite_readme(progress_bar)
+    print(f"Success! Rebuilt README with {completed_count}/{TOTAL_PROBLEMS}.")
