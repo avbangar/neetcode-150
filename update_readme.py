@@ -16,7 +16,7 @@ def count_solutions(directory):
     return len(solutions)
 
 
-def generate_progress_bar(completed, total, bar_length=50):
+def generate_progress_bar(completed, total, bar_length=30):
     """Generates a markdown progress bar using colored emojis."""
     percentage = (completed / total) * 100
     filled_length = int(bar_length * completed // total)
