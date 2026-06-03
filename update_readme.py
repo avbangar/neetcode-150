@@ -5,15 +5,18 @@ TOTAL_PROBLEMS = 150
 SOLUTIONS_DIR = "./solutions"
 README_PATH = "./README.md"
 
-
 def count_solutions(directory):
-    """Counts all Python files in the solutions directory."""
+    """Counts all Python and Swift files in the solutions directory."""
     path = Path(directory)
     if not path.exists():
         return 0
 
-    solutions = [file for file in path.rglob("*.py")]
-    return len(solutions)
+    # Look for both extensions and combine the results
+    py_files = list(path.rglob("*.py"))
+    swift_files = list(path.rglob("*.swift"))
+    
+    all_solutions = py_files + swift_files
+    return len(all_solutions)
 
 
 def generate_progress_bar(completed, total, bar_length=30):
