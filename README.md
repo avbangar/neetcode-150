@@ -3,6 +3,6 @@ Having a bit of fun and testing my basics.
 This repository contains my solutions to the NeetCode 150.
 
 ### Current Progress
-**18/150** completed (12.00%)
+**19/150** completed (12.67%)
 
 🟩🟩🟩⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜
